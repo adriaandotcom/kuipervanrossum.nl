@@ -11,10 +11,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
+
       - uses: actions/checkout@v3
         with:
           persist-credentials: true
           fetch-depth: 0
+
       - name: Build Vue
         run: |
           CONFIGFILE=vite.config.js
@@ -26,16 +28,36 @@ jobs:
           npm ci
           NODE_ENV=production npm run build
         shell: bash
-      - name: Deploy Vue
+
+      - name: Prepare GitHub Pages
         run: |
-          git config --global init.defaultBranch main
           cd dist
           cp index.html 404.html
           echo 'www.kuipervanrossum.nl' > CNAME
-          git config --global user.email "ci@kuipervanrossum.nl"
-          git config --global user.name "GitHub CI"
-          git init
-          git add -A
-          git commit -m 'Automated build and deploy'
-          git push -f https://adriaanvanrossum:${{ secrets.GITHUB_TOKEN }}@github.com/adriaanvanrossum/kuipervanrossum.nl.git main:gh-pages
         shell: bash
+
+      # - name: Deploy Vue
+      #   run: |
+      #     git config --global init.defaultBranch main
+      #     cd dist
+      #     cp index.html 404.html
+      #     echo 'www.kuipervanrossum.nl' > CNAME
+      #     # git config --global user.email "ci@kuipervanrossum.nl"
+      #     # git config --global user.name "GitHub CI"
+      #     # git init
+      #     # git add -A
+      #     # git commit -m 'Automated build and deploy'
+      #     # git push -f https://adriaanvanrossum:${{ secrets.GITHUB_TOKEN }}@github.com/adriaanvanrossum/kuipervanrossum.nl.git main:gh-pages
+      #   shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: "dist"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+
+      - run: echo ${{ steps.deployment.outputs.page_url }}
