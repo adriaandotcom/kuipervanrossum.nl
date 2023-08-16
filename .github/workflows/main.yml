@@ -13,10 +13,16 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       - name: Build Vue
-        uses: xRealNeon/VuePagesAction@1.0.1
-        with:
-          username: 'adriaanvanrossum'
-          reponame: 'kuipervanrossum.nl'
-          cname: 'www.kuipervanrossum.nl'
-          useyarn: false
-          token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
+        run: |
+              npm ci
+              npm run build
+              cd dist
+              ln -s index.html 404.html
+              echo 'www.kuipervanrossum.nl' > CNAME
+              git config --global user.email "ci@kuipervanrossum.nl"
+              git config --global user.name "GitHub CI"
+              git init
+              git add -A
+              git commit -m 'Automated build and deploy'
+              git push -f https://adriaanvanrossum:${{ secrets.GITHUB_TOKEN }}@github.com/adriaanvanrossum/kuipervanrossum.nl.git main:gh-pages
+        shell: bash
