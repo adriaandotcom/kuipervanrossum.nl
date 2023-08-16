@@ -13,9 +13,12 @@ permissions:
   id-token: write
 
 jobs:
-  build_vue:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    name: Build Vue
+    name: Deploy Vue
     steps:
       - uses: actions/setup-node@v3
         with:
