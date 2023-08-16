@@ -1,5 +1,5 @@
 name: Build Vue
-on: 
+on:
   push:
     branches:
       - main
@@ -10,31 +10,32 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
       - uses: actions/checkout@v3
         with:
           persist-credentials: true
           fetch-depth: 0
       - name: Build Vue
         run: |
-              CONFIGFILE=vite.config.js
-              if [ ! -f "$CONFIGFILE" ]; then
-                  echo "$CONFIGFILE does not exist."
-                  echo "::error ::vue config file missing"
-                  exit 1
-              fi
-              npm ci
-              npm run build
+          CONFIGFILE=vite.config.js
+          if [ ! -f "$CONFIGFILE" ]; then
+              echo "$CONFIGFILE does not exist."
+              echo "::error ::vue config file missing"
+              exit 1
+          fi
+          npm ci
+          npm run build
         shell: bash
-      - name: Build Vue
+      - name: Deploy Vue
         run: |
-              cd dist
-              ln -s index.html 404.html
-              echo 'www.kuipervanrossum.nl' > CNAME
-              git config --global user.email "ci@kuipervanrossum.nl"
-              git config --global user.name "GitHub CI"
-              git init
-              git add -A
-              git commit -m 'Automated build and deploy'
-              git push -f https://adriaanvanrossum:${{ secrets.GITHUB_TOKEN }}@github.com/adriaanvanrossum/kuipervanrossum.nl.git main:gh-pages
+          git config --global init.defaultBranch main
+          cd dist
+          ln -s index.html 404.html
+          echo 'www.kuipervanrossum.nl' > CNAME
+          git config --global user.email "ci@kuipervanrossum.nl"
+          git config --global user.name "GitHub CI"
+          git init
+          git add -A
+          git commit -m 'Automated build and deploy'
+          git push -f https://adriaanvanrossum:${{ secrets.GITHUB_TOKEN }}@github.com/adriaanvanrossum/kuipervanrossum.nl.git main:gh-pages
         shell: bash
