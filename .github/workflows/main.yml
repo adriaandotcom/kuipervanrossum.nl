@@ -30,7 +30,7 @@ jobs:
         run: |
           git config --global init.defaultBranch main
           cd dist
-          ln -s index.html 404.html
+          cp index.html 404.html
           echo 'www.kuipervanrossum.nl' > CNAME
           git config --global user.email "ci@kuipervanrossum.nl"
           git config --global user.name "GitHub CI"
