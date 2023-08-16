@@ -200,14 +200,20 @@ onMounted(() => {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
   --image-width: 200px;
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+@media screen and (max-width: 600px) {
+  .album {
+    --image-width: calc(100vw / 2 - 3rem);
+  }
 }
 .thumbnail {
   display: flex;
   flex-direction: column;
   width: var(--image-width);
-  margin: 10px;
+  margin: 1rem;
   text-align: center;
 }
 .thumbnail .image {
