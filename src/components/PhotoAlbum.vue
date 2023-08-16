@@ -263,7 +263,7 @@ onMounted(() => {
   }
 }
 .enlarged .close {
-  top: calc(10px + 1rem);
+  top: 32px;
   right: 10px;
 }
 .enlarged .arrow.left {
