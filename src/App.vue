@@ -15,20 +15,24 @@
         @click="openImage(image.id)"
         :alt="image.title"
       />
-      <p>
+      <p style="margin-top: 0.5rem; margin-bottom: 0">
         {{ image.title }}
-        <span v-if="image.source?.url">
-          (source
+      </p>
+      <p style="font-size: 12px">
+        (download
+        <a :href="image.src" target="_blank" rel="noopener noreferrer">image</a>
+        <span v-if="image.source?.url"
+          >,
           <a :href="image.source.url" target="_blank" rel="noopener noreferrer">
-            {{ image.source.name }} </a
-          >)
-        </span>
+            {{ image.source.name }}
+          </a> </span
+        >)
       </p>
     </div>
   </div>
 
   <section class="description">
-    <h3>Riolering in woning/kruipruimte</h3>
+    <h2>Keuringsrapport riolering in woning/kruipruimte</h2>
     <p>
       De riolering is van PVC/PE. Beide zijn een materiaal wat bijvoorbeeld ook
       in nieuwbouwwoningen wordt toegepast.
@@ -80,6 +84,7 @@
       vervangen moeten worden.
     </p>
 
+    <h3>Gietijzeren riolering</h3>
     <p>
       Er is een gietijzeren riolering aangetroffen. Gietijzeren (metalen)
       rioleringen zijn in het verleden vaak gebruikt voor de aanleg van
@@ -146,7 +151,7 @@ const images = [
     src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-05-originele-tekening.png",
     source: {
       url: "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-05-originele-tekening.fml",
-      name: ".fml",
+      name: "FML",
     },
   },
   {
@@ -155,7 +160,7 @@ const images = [
     src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-13-tekening.png",
     source: {
       url: "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-13-tekening.fml",
-      name: ".fml",
+      name: "FML",
     },
   },
   {
@@ -170,8 +175,22 @@ const images = [
   },
   {
     id: 5,
+    title: "Riolering kruipruimte 3",
+    src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-08-riolering-kruipruimte-3.jpg",
+  },
+  {
+    id: 6,
     title: "1935 riool tekening",
     src: "https://files.adriaanvanrossum.nl/curacaostraat/1935-riool-tekening.jpg",
+  },
+  {
+    id: 7,
+    title: "Bouwtechnische keuring",
+    src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-09-bouwtechnische-keuring-cover.png",
+    source: {
+      url: "https://files.adriaanvanrossum.nl/curacaostraat/bouwtechnische-keuring.pdf",
+      name: "PDF 66mb",
+    },
   },
 ];
 
@@ -242,7 +261,9 @@ header {
   text-align: center;
 }
 .description {
-  margin: 1rem;
+  max-width: 700px;
+  margin: 1rem auto;
+  line-height: 180%;
 }
 
 .album {
