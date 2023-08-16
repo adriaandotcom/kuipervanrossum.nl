@@ -1,21 +1,34 @@
 name: Build Vue
-on: [push]
+on: 
+  push:
+    branches:
+      - main
 jobs:
   build_vue:
     runs-on: ubuntu-latest
     name: Build Vue
+    using: "composite"
     steps:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
       - uses: actions/checkout@v3
         with:
-          persist-credentials: false
+          persist-credentials: true
           fetch-depth: 0
       - name: Build Vue
         run: |
+              CONFIGFILE=vite.config.js
+              if [ ! -f "$CONFIGFILE" ]; then
+                  echo "$CONFIGFILE does not exist."
+                  echo "::error ::vue config file missing"
+                  exit 1
+              fi
               npm ci
               npm run build
+        shell: bash
+      - name: Build Vue
+        run: |
               cd dist
               ln -s index.html 404.html
               echo 'www.kuipervanrossum.nl' > CNAME
