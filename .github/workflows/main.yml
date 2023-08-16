@@ -24,7 +24,7 @@ jobs:
               exit 1
           fi
           npm ci
-          npm run build
+          NODE_ENV=production npm run build
         shell: bash
       - name: Deploy Vue
         run: |
