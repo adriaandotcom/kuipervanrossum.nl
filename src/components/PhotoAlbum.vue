@@ -63,7 +63,7 @@
         :alt="selectedImage.title"
         :style="
           selectedImage.width && selectedImage.height
-            ? `aspect-ratio: ${selectedImage.width} / ${selectedImage.height}; width: 100%; height: 100%`
+            ? `aspect-ratio: ${selectedImage.width} / ${selectedImage.height}; min-width: 100%; min-height: 100%`
             : ''
         "
         @load="onImageLoad"
