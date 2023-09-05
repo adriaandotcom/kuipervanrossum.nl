@@ -7,8 +7,18 @@
     </p>
   </header>
 
-  <div style="display: flex; margin: 0 auto">
-    <p>Select:</p>
+  <div
+    style="
+      display: flex;
+      margin: 0 auto;
+      margin-top: -1rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    <p style="margin: 0">Select:</p>
     <ul class="labels">
       <li>
         <a @click="tag = null" :class="{ active: !tag }">Alles/All</a>
@@ -182,9 +192,11 @@ ul.labels {
   justify-content: center;
   list-style: none;
   padding: 0;
+  flex-wrap: wrap;
+  margin: 0;
 }
 ul.labels li {
-  margin: 0 0.5rem;
+  margin: 0.5rem;
 }
 ul.labels li a {
   cursor: pointer;
