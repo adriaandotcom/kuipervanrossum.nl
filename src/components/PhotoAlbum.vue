@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="album">
-      <div class="thumbnail" v-for="image in images" :key="image.id">
+      <div class="thumbnail" v-for="image in filteredImages" :key="image.id">
         <div
           class="image"
           :style="`background-image:url('${image.thumbnail || image.src}')`"
@@ -31,6 +31,21 @@
     </div>
 
     <div class="enlarged" v-if="enlarged" v-on-click-outside="closeImage">
+      <a class="open-in-new-tab" @click="openInNewTab" v-if="!isLoading">
+        <svg
+          clip-rule="evenodd"
+          fill-rule="evenodd"
+          stroke-linejoin="round"
+          stroke-miterlimit="2"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m22 7c0-.478-.379-1-1-1h-14c-.62 0-1 .519-1 1v14c0 .621.52 1 1 1h14c.478 0 1-.379 1-1zm-14.5.5h13v13h-13zm-5.5 7.5v2c0 .621.52 1 1 1h2v-1.5h-1.5v-1.5zm13.369-5s-2.136.002-4.616.003c-.414 0-.75.336-.75.75-.001 2.479-.003 4.612-.003 4.612 0 .41.335.745.75.745.414 0 .75-.334.75-.745v-2.804l4.439 4.439c.293.293.768.293 1.061 0s.293-.768 0-1.061l-4.439-4.439h2.808c.409 0 .741-.336.741-.75s-.333-.75-.741-.75zm-11.869.637v3.363h-1.5v-3.363zm0-4.637v3.637h-1.5v-3.637zm11.5-4v1.5h1.5v1.5h1.5v-2c0-.478-.379-1-1-1zm-10 0h-2c-.62 0-1 .519-1 1v2h1.5v-1.5h1.5zm4.5 1.5h-3.5v-1.5h3.5zm4.5 0h-3.5v-1.5h3.5z"
+            fill-rule="nonzero"
+          />
+        </svg>
+      </a>
       <a class="close" @click="closeImage" v-if="!isLoading">
         <svg
           clip-rule="evenodd"
@@ -120,6 +135,7 @@ const images = ref(
         url: "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-05-originele-tekening.fml",
         name: "FML",
       },
+      tags: ["tekeningen"],
     },
     {
       title: "Schets uitbouw",
@@ -132,6 +148,7 @@ const images = ref(
         url: "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-13-tekening.fml",
         name: "FML",
       },
+      tags: ["tekeningen"],
     },
     {
       title: "Bouwkundige tekening 2008",
@@ -140,6 +157,7 @@ const images = ref(
         "https://files.adriaanvanrossum.nl/curacaostraat/2008-08-18-bouwkundige-tekening-thumbnail.jpg",
       width: 7100,
       height: 5190,
+      tags: ["tekeningen"],
     },
     {
       title: "Kadastrale perceel 2008",
@@ -148,6 +166,88 @@ const images = ref(
         "https://files.adriaanvanrossum.nl/curacaostraat/2008-08-18-kadastrale-perceel-thumbnail.jpg",
       width: 7085,
       height: 5190,
+      tags: ["tekeningen"],
+    },
+    {
+      title: "Voorkant raam voor",
+      src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-voor.jpeg",
+      thumbnail:
+        "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-voor-thumbnail.jpeg",
+      width: null,
+      height: null,
+      tags: ["ramen"],
+    },
+    {
+      title: "Voorkant raam links",
+      src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-links.jpeg",
+      thumbnail:
+        "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-links-thumbnail.jpeg",
+      width: null,
+      height: null,
+      tags: ["ramen"],
+    },
+    {
+      title: "Voorkant raam links detail",
+      src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-links-detail.jpeg",
+      thumbnail:
+        "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-links-detail-thumbnail.jpeg",
+      width: null,
+      height: null,
+      tags: ["ramen"],
+    },
+    {
+      title: "Voorkant raam rechts",
+      src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-rechts.jpeg",
+      thumbnail:
+        "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-rechts-thumbnail.jpeg",
+      width: null,
+      height: null,
+      tags: ["ramen"],
+    },
+    {
+      title: "Voorkant raam binnen rechts",
+      src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-binnen-rechts.jpeg",
+      thumbnail:
+        "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-binnen-rechts-thumbnail.jpeg",
+      width: null,
+      height: null,
+      tags: ["ramen"],
+    },
+    {
+      title: "Voorkant raam binnen",
+      src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-binnen.jpeg",
+      thumbnail:
+        "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-binnen-thumbnail.jpeg",
+      width: null,
+      height: null,
+      tags: ["ramen"],
+    },
+    {
+      title: "Voorkant raam binnen rechts detail",
+      src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-binnen-rechts-detail.jpeg",
+      thumbnail:
+        "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-binnen-rechts-detail-thumbnail.jpeg",
+      width: null,
+      height: null,
+      tags: ["ramen"],
+    },
+    {
+      title: "Voorkant raam binnen detail",
+      src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-binnen-detail.jpeg",
+      thumbnail:
+        "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-binnen-detail-thumbnail.jpeg",
+      width: null,
+      height: null,
+      tags: ["ramen"],
+    },
+    {
+      title: "Voorkant raam binnen rechts tekst",
+      src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-binnen-rechts-tekst.jpeg",
+      thumbnail:
+        "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-binnen-rechts-tekst-thumbnail.jpeg",
+      width: null,
+      height: null,
+      tags: ["ramen"],
     },
     {
       title: "Riolering kruipruimte 1",
@@ -156,6 +256,7 @@ const images = ref(
         "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-08-riolering-kruipruimte-1-thumbnail.jpg",
       width: 1852,
       height: 1058,
+      tags: ["riolering"],
     },
     {
       title: "Riolering kruipruimte 2",
@@ -164,6 +265,7 @@ const images = ref(
         "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-08-riolering-kruipruimte-2-thumbnail.jpg",
       width: 1856,
       height: 1058,
+      tags: ["riolering"],
     },
     {
       title: "Riolering kruipruimte 3",
@@ -172,6 +274,7 @@ const images = ref(
         "https://files.adriaanvanrossum.nl/curacaostraat/2023-08-08-riolering-kruipruimte-3-thumbnail.jpg",
       width: 911,
       height: 1280,
+      tags: ["riolering"],
     },
     {
       title: "1935 riool tekening",
@@ -180,6 +283,7 @@ const images = ref(
         "https://files.adriaanvanrossum.nl/curacaostraat/1935-riool-tekening-thumbnail.jpg",
       width: 7768,
       height: 4668,
+      tags: ["tekeningen", "riolering"],
     },
     {
       title: "Bouwtechnische keuring",
@@ -190,6 +294,7 @@ const images = ref(
         url: "https://files.adriaanvanrossum.nl/curacaostraat/bouwtechnische-keuring.pdf",
         name: "PDF 66mb!",
       },
+      tags: ["rapporten"],
     },
     {
       title: "Lintvoeg- en vloerwaterpassing",
@@ -200,25 +305,45 @@ const images = ref(
         url: "https://files.adriaanvanrossum.nl/curacaostraat/2008-09-01-lintvoeg-en-vloerwaterpassing.pdf",
         name: "PDF 2mb",
       },
+      tags: ["rapporten"],
     },
   ].map((image, index) => ({ ...image, id: index })),
 );
 
+const filteredImages = computed(() => {
+  if (props.tag) {
+    return images.value.filter((image) => image.tags?.includes(props.tag));
+  } else {
+    return images.value;
+  }
+});
+
 const enlarged = ref(false);
 const selectedImageId = ref(null);
 const isLoading = ref(false);
+
+const props = defineProps({
+  tag: {
+    type: String,
+    required: false,
+  },
+});
 
 const onImageLoad = () => {
   isLoading.value = false;
 };
 
 const selectedImage = computed(() => {
-  return images.value.find((image) => image.id === selectedImageId.value);
+  return filteredImages.value.find(
+    (image) => image.id === selectedImageId.value,
+  );
 });
 
 const openImage = (id) => {
   enlarged.value = true;
-  selectedImageId.value = images.value.find((image) => image.id === id).id;
+  selectedImageId.value = filteredImages.value.find(
+    (image) => image.id === id,
+  ).id;
   isLoading.value = true;
 };
 
@@ -228,33 +353,38 @@ const closeImage = () => {
 };
 
 const prevImage = () => {
-  const index = images.value.findIndex(
+  const index = filteredImages.value.findIndex(
     (image) => image.id === selectedImageId.value,
   );
   if (index > 0) {
-    selectedImageId.value = images.value[index - 1].id;
+    selectedImageId.value = filteredImages.value[index - 1].id;
   } else {
-    selectedImageId.value = images.value[images.value.length - 1].id;
+    selectedImageId.value =
+      filteredImages.value[filteredImages.value.length - 1].id;
   }
   isLoading.value = true;
 };
 
 const nextImage = () => {
-  const index = images.value.findIndex(
+  const index = filteredImages.value.findIndex(
     (image) => image.id === selectedImageId.value,
   );
   console.log({
     date: new Date(),
     index,
     nextImage: selectedImageId.value,
-    imagesLength: images.value.length,
+    imagesLength: filteredImages.value.length,
   });
-  if (index < images.value.length - 1) {
-    selectedImageId.value = images.value[index + 1].id;
+  if (index < filteredImages.value.length - 1) {
+    selectedImageId.value = filteredImages.value[index + 1].id;
   } else {
-    selectedImageId.value = images.value[0].id;
+    selectedImageId.value = filteredImages.value[0].id;
   }
   isLoading.value = true;
+};
+
+const openInNewTab = () => {
+  window.open(selectedImage.value.src, "_blank");
 };
 
 onMounted(() => {
@@ -326,6 +456,7 @@ onMounted(() => {
 }
 .enlarged .loader,
 .enlarged .arrow,
+.enlarged .open-in-new-tab,
 .enlarged .close {
   position: absolute;
   top: 50%;
@@ -339,6 +470,7 @@ onMounted(() => {
 }
 @media (hover: hover) {
   .enlarged .arrow:hover,
+  .enlarged .open-in-new-tab:hover,
   .enlarged .close:hover {
     opacity: 1;
     background-color: transparent;
@@ -347,6 +479,12 @@ onMounted(() => {
 .enlarged .close {
   top: 32px;
   right: 10px;
+}
+.enlarged .open-in-new-tab {
+  top: 32px;
+  right: 65px;
+  /* flip horizontally */
+  transform: translate(0, -50%) scaleX(-1);
 }
 .enlarged .arrow.left {
   left: 10px;
