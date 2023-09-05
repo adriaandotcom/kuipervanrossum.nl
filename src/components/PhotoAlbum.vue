@@ -169,6 +169,15 @@ const images = ref(
       tags: ["tekeningen"],
     },
     {
+      title: "Voorkant raam afmetingen",
+      src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-05-voorkant-raam-afmetingen.png",
+      thumbnail:
+        "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-05-voorkant-raam-afmetingen-thumbnail.png",
+      width: null,
+      height: null,
+      tags: ["tekeningen", "ramen"],
+    },
+    {
       title: "Voorkant raam voor",
       src: "https://files.adriaanvanrossum.nl/curacaostraat/2023-09-03-voorkant-raam-voor.jpeg",
       thumbnail:
