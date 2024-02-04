@@ -59,7 +59,7 @@ jobs:
       #     # git init
       #     # git add -A
       #     # git commit -m 'Automated build and deploy'
-      #     # git push -f https://adriaanvanrossum:${{ secrets.GITHUB_TOKEN }}@github.com/adriaanvanrossum/kuipervanrossum.nl.git main:gh-pages
+      #     # git push -f https://adriaanvanrossum:${{ secrets.GITHUB_TOKEN }}@github.com/adriaandotcom/kuipervanrossum.nl.git main:gh-pages
       #   shell: bash
 
       - name: Upload artifact
